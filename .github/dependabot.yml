@@ -1,0 +1,39 @@
+version: 2
+updates:
+
+  # Backend
+  - package-ecosystem: "npm"
+    directory: "/getrady-backend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Paris"
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "backend"]
+    commit-message:
+      prefix: "chore(deps-backend)"
+
+  # Frontend
+  - package-ecosystem: "npm"
+    directory: "/getrady-frontend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Paris"
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "frontend"]
+    commit-message:
+      prefix: "chore(deps-frontend)"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Paris"
+    labels: ["dependencies", "ci"]
+    commit-message:
+      prefix: "chore(actions)"

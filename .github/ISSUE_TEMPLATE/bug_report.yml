@@ -1,0 +1,70 @@
+name: "Anomalie / Bug"
+description: "Déclarer une anomalie observée dans GeTrady"
+title: "[BUG] Titre court et explicite"
+labels: ["bug"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: "Merci de remplir toutes les sections pour faciliter l’analyse."
+  - type: input
+    id: version
+    attributes:
+      label: Version de l’app / commit
+      placeholder: "ex. 0.1.0 (commit abc123)"
+  - type: textarea
+    id: contexte
+    attributes:
+      label: Contexte
+      description: "Où et quand l’anomalie survient ? (écran, action, compte)"
+      placeholder: "Ex. App mobile > Onglet Marché > Ouverture d’un actif…"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Étapes pour reproduire
+      description: "Décris la reproduction pas-à-pas"
+      placeholder: "1. Ouvrir l’app\n2. Aller sur …\n3. Cliquer …\n4. Observer …"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Résultat attendu
+      placeholder: "Ce qui aurait dû se passer…"
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Résultat observé
+      placeholder: "Ce qui se passe réellement…"
+    validations:
+      required: true
+  - type: dropdown
+    id: criticite
+    attributes:
+      label: Criticité
+      options:
+        - Bloquant
+        - Majeur
+        - Mineur
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Environnement
+      description: "Appareil, OS, version RN/Expo, réseau, etc."
+      placeholder: "Android 14 / iOS 17, Expo 51, Wi-Fi/4G…"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / captures
+      description: "Stack trace, console, screenshots, vidéos (si possible)"
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes complémentaires
+      placeholder: "Hypothèses, pistes, fréquence d’occurrence…"

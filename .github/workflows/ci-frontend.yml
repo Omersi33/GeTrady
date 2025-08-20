@@ -1,0 +1,45 @@
+name: CI Frontend
+
+# Lance la CI uniquement si le frontend change
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'getrady-frontend/**'
+      - '.github/workflows/ci-frontend.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'getrady-frontend/**'
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: getrady-frontend
+
+    steps:
+      # 1) Récupère le code
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2) Node + cache npm (plus rapide)
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: getrady-frontend/package-lock.json
+
+      # 3) Install
+      - name: Install dependencies
+        run: npm ci
+
+      # 4) Lint (si présent)
+      - name: Lint
+        run: npm run lint --if-present
+
+      # 5) Tests (si présents)
+      - name: Test
+        run: npm run test:ci --if-present

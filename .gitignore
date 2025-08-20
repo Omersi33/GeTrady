@@ -1,0 +1,76 @@
+# === Sorties compilées / dépendances (global) ===
+/dist
+/node_modules
+/build
+
+# === Logs ===
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# === OS ===
+.DS_Store
+
+# === Tests ===
+/coverage
+/.nyc_output
+
+# === IDEs/éditeurs ===
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# === VSCode ===
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# === Fichiers d'environnement (globaux) ===
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+!**/.env.example
+
+# === Dossiers temporaires ===
+.temp
+.tmp
+
+# === Runtime data ===
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# === Rapports de diagnostic Node ===
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Backend
+getrady-backend/dist
+getrady-backend/coverage
+getrady-backend/node_modules
+getrady-backend/.env
+getrady-backend/.env.*
+!getrady-backend/.env.example
+
+# Frontend
+getrady-frontend/.expo
+getrady-frontend/.expo-shared
+getrady-frontend/dist
+getrady-frontend/web-build
+getrady-frontend/expo-env.d.ts
+getrady-frontend/node_modules
+getrady-frontend/.env
+getrady-frontend/.env.*
+!getrady-frontend/.env.example
