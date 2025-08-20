@@ -1,21 +1,22 @@
 name: CI Frontend
 
 on:
-  push:
-    branches: [main, develop]
-    paths:
-      - 'getrady-frontend/**'
-      - '.github/workflows/ci-frontend.yml'
   pull_request:
     branches: [main, develop]
     paths:
       - 'getrady-frontend/**'
       - '.github/workflows/ci-frontend.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
     name: frontend
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: getrady-frontend
@@ -23,8 +24,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: 20
+          cache: npm
           cache-dependency-path: getrady-frontend/package-lock.json
-      - run: npm ci
-      - run: npm run test -- --ci
+      - run: npm ci --no-audit --prefer-offline
+      - run: npm run test -- --ci --runInBand
+        env:
+          CI: true
