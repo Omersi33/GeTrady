@@ -8,6 +8,10 @@ on:
       - '.github/workflows/ci-backend.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -21,13 +25,28 @@ jobs:
       run:
         working-directory: getrady-backend
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout (PR head SHA, full fetch)
+        uses: actions/checkout@v4
         with:
-          node-version: 20
-          cache: npm
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+          submodules: false
+          persist-credentials: false
+
+      - name: Mark repo as safe (avoid git 128)
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
           cache-dependency-path: getrady-backend/package-lock.json
-      - run: npm ci --no-audit --prefer-offline
-      - run: npm test -- --ci --runInBand
+
+      - name: Install deps
+        run: npm ci --no-audit --prefer-offline
+
+      - name: Run tests (CI)
+        run: npm test -- --ci --runInBand
         env:
-          CI: true
+          CI: 'true'

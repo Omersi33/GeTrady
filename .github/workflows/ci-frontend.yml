@@ -8,6 +8,10 @@ on:
       - '.github/workflows/ci-frontend.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -21,8 +25,16 @@ jobs:
       run:
         working-directory: getrady-frontend
     steps:
-      - name: Checkout
+      - name: Checkout (PR head SHA, full fetch)
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+          submodules: false
+          persist-credentials: false
+
+      - name: Mark repo as safe (avoid git 128)
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -34,7 +46,7 @@ jobs:
       - name: Install deps
         run: npm ci --no-audit --prefer-offline
 
-      - name: Run tests
+      - name: Run tests (CI)
         run: npm run test:ci
         env:
           CI: 'true'
