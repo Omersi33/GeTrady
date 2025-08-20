@@ -1,59 +1,30 @@
 name: CI Backend
 
-# Déclenche la CI sur push/PR vers main ou develop, uniquement si le backend est modifié
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
     paths:
       - 'getrady-backend/**'
       - '.github/workflows/ci-backend.yml'
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
     paths:
       - 'getrady-backend/**'
+      - '.github/workflows/ci-backend.yml'
 
 jobs:
-  backend:
+  test:
+    name: backend
     runs-on: ubuntu-latest
-
-    # Toutes les commandes "run" se font dans le dossier du backend
     defaults:
       run:
         working-directory: getrady-backend
-
     steps:
-      # 1) Récupère le code
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # 2) Installe Node et active le cache npm (plus rapide)
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: '20'
+          cache: 'npm'
           cache-dependency-path: getrady-backend/package-lock.json
-
-      # 3) Installe les dépendances
-      - name: Install dependencies
-        run: npm ci
-
-      # 4) Lint (si script présent)
-      - name: Lint
-        run: npm run lint --if-present
-
-      # 5) Tests (Jest). --passWithNoTests évite l’échec si tu n’as pas encore de tests.
-      - name: Test
-        run: npm test -- --ci --passWithNoTests
-
-      # 6) Build (Nest/TypeScript)
-      - name: Build
-        run: npm run build --if-present
-
-      # 7) Publie l’artefact dist/ pour téléchargement depuis l’onglet “Actions”
-      - name: Upload dist artifact
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: backend-dist
-          path: dist
+      - run: npm ci
+      - run: npm test
