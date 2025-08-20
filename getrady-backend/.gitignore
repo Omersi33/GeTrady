@@ -1,0 +1,39 @@
+# Build & deps
+dist/
+node_modules/
+coverage/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Tests
+/.nyc_output
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# OS
+.DS_Store
+
+# Env files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+!.env.example
+
+# Temp
+.temp
+.tmp
+
+# Diagnostics
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
