@@ -17,34 +17,24 @@ export class UsersService {
   ) {}
 
   async register(dto: RegisterDto) {
-    if (await this.repo.findOne({ where: { email: dto.email } })) {
-      throw new BadRequestException('Cette adresse mail est déjà utilisée.')
-    }
-    const user = this.repo.create(dto)
-    await this.repo.save(user)
-    return { id: user.id }
+    const email = dto.email;
+    const exists = await this.repo.exist({ where: { email } });
+    if (exists) throw new BadRequestException('Cette adresse mail est déjà utilisée.');
+    const user = this.repo.create({ ...dto, email });
+    await this.repo.save(user);
+    return { id: user.id };
   }
 
   async login(dto: LoginDto) {
-    const user = await this.repo.findOne({ where: { email: dto.email } })
-    if (!user) {
-      throw new BadRequestException('Adresse mail inexistante')
-    }
-    if (user.password !== dto.password) {
-      throw new BadRequestException('Mot de passe incorrect')
-    }
-    const token = this.jwt.sign({ sub: user.id, email: user.email })
-    return {
-      token,
-      user: {
-        id     : user.id,
-        name   : user.name,
-        email  : user.email,
-        birth  : user.birth,
-        isAdmin: user.isAdmin
-      }
-    }
+    const email = dto.email;
+    const pass  = dto.password;
+    const user = await this.repo.findOne({ where: { email } });
+    if (!user) throw new BadRequestException('Adresse mail inexistante');
+    if (user.password !== pass) throw new BadRequestException('Mot de passe incorrect');
+    const token = this.jwt.sign({ sub: user.id, email: user.email });
+    return { token, user: { id: user.id, name: user.name, email: user.email, birth: user.birth, isAdmin: user.isAdmin } };
   }
+
 
   async findById(id: number) {
     const user = await this.repo.findOneBy({ id })
@@ -59,26 +49,35 @@ export class UsersService {
   }
 
   async updateAccount(userId: number, dto: UpdateAccountDto) {
-    if (dto.email) {
-      const exists = await this.repo.findOne({ where: { email: dto.email } })
+    const payload = Object.fromEntries(
+      Object.entries(dto).filter(([, v]) => v !== undefined && v !== '')
+    );
+
+    if ('email' in payload) {
+      const exists = await this.repo.findOne({ where: { email: payload.email as string } });
       if (exists && exists.id !== userId) {
-        throw new BadRequestException('Cette adresse mail est déjà utilisée.')
+        throw new BadRequestException('Cette adresse mail est déjà utilisée.');
       }
     }
-    await this.repo.update(userId, dto)
-    return { ok: true }
+
+    if (Object.keys(payload).length === 0) {
+      throw new BadRequestException('Aucune donnée à mettre à jour');
+    }
+
+    await this.repo.update(userId, payload);
+    return { ok: true };
   }
 
   async updatePassword(userId: number, dto: UpdatePasswordDto) {
-    const user = await this.repo.findOneBy({ id: userId })
+    const user = await this.repo.findOneBy({ id: userId });
     if (!user || user.password !== dto.oldPassword) {
-      throw new BadRequestException('Mot de passe incorrect')
+      throw new BadRequestException('Mot de passe incorrect');
     }
     if (dto.newPassword === user.password) {
-      throw new BadRequestException('Le nouveau mot de passe ne peut pas être le même que l\'ancien')
+      throw new BadRequestException('Le nouveau mot de passe ne peut pas être le même que l\'ancien');
     }
-    await this.repo.update(userId, { password: dto.newPassword })
-    return { ok: true }
+    await this.repo.update(userId, { password: dto.newPassword });
+    return { ok: true };
   }
 
   async deleteAccount(userId: number) {
