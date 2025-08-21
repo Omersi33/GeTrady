@@ -19,7 +19,7 @@ Backend — getrady-backend/.env
 TWELVEDATA_API_KEY=a8c63e9316b24068802e68047a73c2e7
 TWELVEDATA_TZ=Europe/Paris
 
-DB_HOST=localhost
+DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_USER=nom
 DB_PASSWORD=mot-de-passe
@@ -31,11 +31,14 @@ JWT_EXPIRES=7d
 NODE_ENV=development
 PORT=3000
 
-CORS_ORIGINS=http://localhost:19006,http://192.168.1.50:19006
+CORS_ORIGINS=http://localhost:19006,http://127.0.0.1:19006,http://adresse-ip-publique:19006
 ```
 
 Frontend — getrady-frontend/.env
-```EXPO_PUBLIC_API_URL=http://localhost:3000```
+
+```EXPO_PUBLIC_API_URL=http://adresse-ip-publique:3000```
+
+Dans ces fichiers .env, remplacer `nom`, `mot-de-passe`, `une-longue-valeur-aleatoire` et `adresse-ip-publique` par les valeurs correspondantes.
 
 ## 4) Installation
 
