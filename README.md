@@ -16,12 +16,11 @@ Suivi d’actifs & signaux — Expo/React Native + NestJS.
 ├─ bloc4/
 └─ .github/workflows/   # CI
 
+## Environnements
+Tous les documents nécessaires pour répondre aux compétences se trouvent dans le dossiers ```docs```
+
 ## Démarrage rapide
 Voir docs/bloc2/manuel-deploiement.md
-
-## Environnements
-- Backend : getrady-backend/.env.example
-- Frontend : voir manuel de déploiement (docs/bloc2/manuel-deploiement.md)
 
 ## Tests
 - Guide : docs/bloc2/tests-unitaires.md
@@ -30,6 +29,3 @@ Voir docs/bloc2/manuel-deploiement.md
 ## Intégration continue
 - Workflows : .github/workflows/
 - Détails : docs/bloc2/protocole-ci.md
-
-## Documentation
-- Déploiement : docs/bloc2/manuel-deploiement.md
