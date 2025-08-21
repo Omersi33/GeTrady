@@ -54,3 +54,7 @@ Ouvrir le terminal de getrady-frontend
 
 ## 6) Admin
 Pour passer admin, aller dans la table `user` de la base, et passer à 1 la colonne `isAdmin` de l'utilisateur souhaité.
+
+## 6) Données
+Pour tester l'application, il va falloir ajouter des actifs (crypto etc). En tant qu'admin, c'est possible.
+Ajouter des noms de symboles existant (exemple : 'BTCUSD', 'ETHUSD', 'XAUUSD') avec les indicateurs RSI, MACD et BB souhaités, des notifications s'enverront quand un signal BUY ou SELL sera détecté.
