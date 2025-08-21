@@ -1,28 +1,24 @@
-# Cahier de recettes — socle technique
+# Scénarios & Résultats
 
-## Recettes API techniques
-- R1 — Santé :
-  - **Étapes** : `GET /health`
-  - **Attendu** : 200, `{status:"ok", db:true}`
-  - **Résultat** : ✅ / ❌
+## Contexte
+- Version: v0.1.0
+- Envs: dev/staging
+- Prérequis: back up, front up, compte test
 
-- R2 — Métriques :
-  - **Étapes** : ouvrir `/metrics`
-  - **Attendu** : `Content-Type: text/plain; version=0.0.4`, présence de `http_requests_total`, `http_request_duration_seconds_*`
-  - **Résultat** : ✅ / ❌
+## Scénarios
+1. **Login OK**
+   - Étapes: saisir email/pwd valides → Se connecter
+   - Attendu: redirection `/`, token en mémoire
+   - Résultat: __OK/KO__ (preuve: capture)
+2. **Login KO (pwd)**
+   - Attendu: message “Mot de passe incorrect”
+   - Résultat: __OK/KO__
+3. **Liste d’actifs (admin)**
+   - Attendu: affichage, édition config, suppression ok (confirm)
+   - Résultat: __OK/KO__
+4. **/health**
+   - Attendu: 200 + `{ status, db }`
+   - Résultat: __OK/KO__
 
-- R3 — Limitation de débit :
-  - **Étapes** : générer >100 req/min/IP
-  - **Attendu** : `429 Too Many Requests` après le seuil
-  - **Résultat** : ✅ / ❌
-
-- R4 — CORS (Expo Web) :
-  - **Pré-requis** : `CORS_ORIGINS` défini
-  - **Étapes** : appel front web depuis `http://localhost:19006`
-  - **Attendu** : requêtes acceptées
-  - **Résultat** : ✅ / ❌
-
-## À venir (fonctionnel)
-- Auth (login/refresh) — scénarios succès/échec.
-- Alertes BUY/SELL — création, envoi, réception (mobile).
-- Droits d’accès — endpoints protégés & rôles.
+## Synthèse
+- Nombre OK/KO, anomalies ouvertes (liens issues)
