@@ -3,9 +3,9 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "paths": { "@/*": ["./*"] },
+    "types": ["jest", "node"],
+    "typeRoots": ["./node_modules/@types", "./types"]
   },
   "include": [
     "expo-env.d.ts",

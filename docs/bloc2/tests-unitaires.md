@@ -20,20 +20,37 @@
 - **End-to-end** : `npm run test:e2e`
 - **CI** : `jest --ci --passWithNoTests` (les TU tournent à chaque push/PR)
 
-### Config Jest utilisée (résumé)
+### Config Jest (résumé)
 - `jest.config.js` : `ts-jest` + `moduleNameMapper: { '^src/(.*)$': '<rootDir>/src/$1' }`
 - `tsconfig.spec.json` : `types: ["jest","node"]`, `isolatedModules: true`
 - `test/jest-setup.ts` : `import 'reflect-metadata'`
 
-### Preuves (exécution locale)
-- `npm test` → **3 suites vertes**, **10 tests passés**
-- `npm run test:e2e` → **health OK** (200 + payload)
-
 ---
 
-## Frontend (Expo/React Native)
-- Cible v1 :
-  - 2 tests de composants (ex. `AssetCard`, `AuthCard`)
-- Commandes :
-  - `npm run test` (watch)
-  - CI : `npm run test:ci`
+## Frontend (Expo / React Native)
+
+### Suites en place (toutes vertes)
+- `app/(auth)/__tests__/login.test.tsx`
+  - saisie email + password
+  - hash `sha1` puis `useAuth().login({ email, password })`
+  - redirection `router.replace('/')` si succès
+- `components/__tests__/AssetCard.test.tsx`
+  - toggle expansion (chevron down ⇄ up)
+  - icônes admin visibles (edit / trash) si `user.isAdmin`
+  - suppression via `Alert.alert` ⇒ `AssetService.delete(id)` + callback `onDeleted(id)`
+- `components/__tests__/ConfigModal.test.tsx`
+  - pré-remplissage depuis `initial`
+  - soumission numérisée (`onSubmit` reçoit bien des **nombres**)
+
+### Patterns & conventions
+- **Rendu** : `react-test-renderer` + **`act(...)` obligatoire** autour des créations, updates et handlers.
+- **Sélections** :
+  - `findAll((n) => (n.type as any) === 'InputRowMock')` (évite le conflit *ElementType*).
+  - `findByProps({ label: 'Valider' })`, `findAllByProps({ name: 'trash-2' })`.
+- **Mocks “hoist-safe”** (prévient *module factory out-of-scope*):
+  - Dans `jest.mock(...)`, ne pas referencer de variable locale.
+  - Publier les espions via exports : `__loginMock`, `__replaceMock`, `__deleteMock`, etc.
+
+### Scripts
+- `npm test` → local
+- `npm run test:ci` → `jest --ci --passWithNoTests`
