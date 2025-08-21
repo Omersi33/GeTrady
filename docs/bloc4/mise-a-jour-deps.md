@@ -14,22 +14,32 @@
 ## Règles de merge
 - **Patch** (x.y.**z**) → *peut* être **auto-merge** si la **CI est verte**.
 - **Minor/Major** → revue manuelle + tests fonctionnels ciblés.
-- **Sécurité** : activer les **alertes de vulnérabilités** GitHub et prioriser les PR marquées “security”.
+- **Sécurité** : prioriser les PR marquées **security** (GitHub advisories).
 
-## Workflow
-1) **PR auto** ouverte par Dependabot (lundi matin).
+## Workflow de traitement
+1) PR auto ouverte par Dependabot (lundi matin).
 2) **CI** : lint + tests → doit être **verte**.
 3) **Revue** :
    - Patch → merge direct (ou auto-merge si activé).
    - Minor/Major → validation par reviewer.
 4) **CHANGELOG** : mettre à jour la section **Changed/Fixed** si impact visible.
 
+## Conflits de peerDependencies (ex. React 19 / React-DOM 19.1)
+- Ne **pas** utiliser `--force` en CI.
+- Aligner les versions majeures impliquées (React / React-DOM / RN Web…).
+- Si blocage, **fermer la PR** et ouvrir un ticket “Montée de version coordonnée”.
+
+## Rerun CI
+- Bouton **Re-run jobs** dans l’onglet *Actions* de la PR.
+- Ou commit vide :  
+  `git commit --allow-empty -m "ci: rerun"` puis `git push`.
+
 ## Vérifications
-- Dans GitHub : **Insights → Dependency graph → Dependabot** doit être actif.
-- Les labels `dependencies`, `backend`, `frontend`, `ci` existent (sinon PR sans labels — OK).
+- GitHub : **Insights → Dependency graph → Dependabot** doit être actif.
+- Les labels `dependencies`, `backend`, `frontend`, `ci` existent (sinon PR sans labels — acceptable).
 - Les workflows CI se déclenchent bien sur les PR Dependabot.
 
 ## Bonnes pratiques
-- Garder le parc “à jour” **régulièrement** pour éviter les sauts majoritaires.
-- Sur PR sensible (ex. TypeORM, Nest, React Native), tester **dev + prod** avant merge.
-- Si besoin, ignorer temporairement une **major** via options Dependabot et créer un ticket de suivi.
+- Mettre à jour **régulièrement** pour éviter les gros gaps de versions.
+- Sur PR sensible (Nest, RN, TypeORM…), tester **dev + prod** avant merge.
+- Si nécessaire, ignorer temporairement une **major** dans `dependabot.yml` et créer un ticket de suivi.
