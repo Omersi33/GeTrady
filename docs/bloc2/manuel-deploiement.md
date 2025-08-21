@@ -15,30 +15,25 @@ CREATE DATABASE getrady CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ## 3) Fichiers .env
 Backend — getrady-backend/.env
 
-# TwelveData (optionnel)
-TWELVEDATA_API_KEY=a8c63e9316b24068802e68047a73c2e7
+`TWELVEDATA_API_KEY=a8c63e9316b24068802e68047a73c2e7
 TWELVEDATA_TZ=Europe/Paris
 
-# Base MySQL
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=nom
 DB_PASSWORD=mot-de-passe
 DB_NAME=getrady
 
-# JWT
 JWT_SECRET=une-longue-valeur-aleatoire
 JWT_EXPIRES=7d
 
-# Serveur
 NODE_ENV=development
 PORT=3000
 
-# CORS (URL Expo / IP LAN à adapter)
-CORS_ORIGINS=http://localhost:19006,http://192.168.1.50:19006
+CORS_ORIGINS=http://localhost:19006,http://192.168.1.50:19006`
 
 Frontend — getrady-frontend/.env
-EXPO_PUBLIC_API_URL=http://localhost:3000
+`EXPO_PUBLIC_API_URL=http://localhost:3000`
 
 ## 4) Installation
 
