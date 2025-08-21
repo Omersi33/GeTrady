@@ -54,3 +54,17 @@ Ouvrir le terminal de getrady-frontend
 
 ## 6) Admin
 Pour passer admin, aller dans la table `user` de la base, et passer à 1 la colonne `isAdmin` de l'utilisateur souhaité.
+
+## 6) Données
+Pour tester l'application, il va falloir ajouter des actifs (crypto etc). En tant qu'admin, c'est possible. Ou alors simplement exécuter la requête à la fin du fichier.
+Ajouter des noms de symboles existant (exemple : 'BTCUSD', 'ETHUSD', 'XAUUSD') avec les indicateurs RSI, MACD et BB souhaités, des notifications s'enverront quand un signal BUY ou SELL sera détecté. L'analyse est faite toutes les minutes sauf en week-end.
+```sql
+INSERT INTO `asset`
+(`symbol`,`lastUpdate`,`currentValue`,`advice`,`TP1`,`TP2`,`TP3`,`SL`,`maFast`,`maSlow`,`rsiLo`,`rsiHi`,`bbPeriod`,`bbStdDev`)
+VALUES
+('BTC/USD','2025-08-21 00:00:00',0,'WAIT',0,0,0,0,13,19,17,76,15,1.8),
+('XAU/USD','2025-08-21 00:00:00',0,'WAIT',0,0,0,0,6,14,30,70,20,1.9),
+('ETH/USD','2025-08-21 00:00:00',0,'WAIT',0,0,0,0,5,12,72,73,18,1.8),
+('SOL/USD','2025-08-21 00:00:00',0,'WAIT',0,0,0,0,7,16,26,74,20,2.0),
+('WTI/USD','2025-08-21 00:00:00',0,'WAIT',0.,0,0,0,6,15,31,69,18,1.9);
+```
