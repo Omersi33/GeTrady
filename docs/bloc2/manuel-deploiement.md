@@ -15,7 +15,8 @@ CREATE DATABASE getrady CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ## 3) Fichiers .env
 Backend — getrady-backend/.env
 
-`TWELVEDATA_API_KEY=a8c63e9316b24068802e68047a73c2e7
+```
+TWELVEDATA_API_KEY=a8c63e9316b24068802e68047a73c2e7
 TWELVEDATA_TZ=Europe/Paris
 
 DB_HOST=localhost
@@ -30,10 +31,11 @@ JWT_EXPIRES=7d
 NODE_ENV=development
 PORT=3000
 
-CORS_ORIGINS=http://localhost:19006,http://192.168.1.50:19006`
+CORS_ORIGINS=http://localhost:19006,http://192.168.1.50:19006
+```
 
 Frontend — getrady-frontend/.env
-`EXPO_PUBLIC_API_URL=http://localhost:3000`
+```EXPO_PUBLIC_API_URL=http://localhost:3000```
 
 ## 4) Installation
 
