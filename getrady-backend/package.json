@@ -33,7 +33,7 @@
     "class-validator": "^0.14.2",
     "expo-server-sdk": "^3.15.0",
     "helmet": "^8.1.0",
-    "joi": "^17.13.3",
+    "joi": "^18.0.1",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.3",
     "openai": "^5.0.1",
